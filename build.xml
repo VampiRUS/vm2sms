@@ -1,0 +1,50 @@
+<project name="vm2sms" default="build" basedir=".">
+    <property name="filename" value="pkg_vm2sms.zip" />
+
+    <target name="build" depends="clean, build_package">
+    </target>
+
+    <target name="clean">
+        <delete file="${filename}" />
+        <delete>
+		  <fileset dir="packages">
+		    <include name="*.zip" />
+		  </fileset>
+		</delete>
+    </target>
+
+    <target name="build_package" depends="pack_content">
+    	<zip destfile="${filename}" >
+            <fileset dir="." >
+                <include name="pkg_vm2sms.xml" />
+                <include name="install.php" />
+                <include name="packages/**" />
+            </fileset>
+        </zip>
+    </target>
+
+	<target name="pack_content">
+		<zip destfile="packages/com_vm2sms.zip" >
+            <fileset dir="com_vm2sms" >
+                <include name="**/**" />
+            </fileset>
+        </zip>
+        <zip destfile="packages/plg_vm2sms_smsc.zip" >
+            <fileset dir="plugins/smsc" >
+                <include name="**/**" />
+            </fileset>
+        </zip>
+        <zip destfile="packages/plg_vm2sms_smsru.zip" >
+            <fileset dir="plugins/smsru" >
+                <include name="**/**" />
+            </fileset>
+        </zip>
+        <zip destfile="packages/plg_vmpayment_vm2sms.zip" >
+            <fileset dir="plugins/vm2sms" >
+                <exclude name="class.php"/>
+                <exclude name="pack.php"/>
+                <include name="**/**" />
+            </fileset>
+        </zip>
+	</target>
+</project>
